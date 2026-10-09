@@ -1,0 +1,575 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Cathu!</title>
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cream: #fff4ed;
+            --pink: #ffb7c5;
+            --dark: #1c1018;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--cream);
+            font-family: "DM Sans", sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Fixed fullscreen video behind the entire website */
+        .video-background {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            background: #21121c;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Dark overlay makes text readable */
+        .video-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(15, 7, 15, 0.38),
+                    rgba(15, 7, 15, 0.52) 50%,
+                    rgba(15, 7, 15, 0.78)
+                );
+        }
+
+        section {
+            position: relative;
+            width: 100%;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            animation: fadeUp 1.5s ease both;
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 11px;
+            margin-bottom: 25px;
+            color: var(--pink);
+        }
+
+        h1, h2, .quote {
+            font-family: "Cormorant Garamond", serif;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            line-height: 0.95;
+        }
+
+        .hero h1 span {
+            color: var(--pink);
+            font-style: italic;
+        }
+
+        .hero-description {
+            margin: 28px auto 0;
+            max-width: 440px;
+            line-height: 1.9;
+            font-size: 14px;
+            color: rgba(255, 244, 237, 0.85);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            color: rgba(255, 244, 237, 0.8);
+        }
+
+        .scroll-hint span {
+            display: block;
+            margin-top: 12px;
+            font-size: 22px;
+            animation: bob 1.8s infinite;
+        }
+
+        /* GALLERY INTRO */
+        .gallery-intro {
+            padding: 120px 20px 60px;
+            text-align: center;
+        }
+
+        .gallery-intro h2 {
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            margin-bottom: 15px;
+        }
+
+        .gallery-intro p {
+            font-size: 13px;
+            color: rgba(255, 244, 237, 0.75);
+            line-height: 1.8;
+        }
+
+        /* VERTICAL PHOTO STORY */
+        .gallery {
+            width: min(900px, 100%);
+            margin: 0 auto;
+            padding: 20px 24px 100px;
+        }
+
+        .memory {
+            display: grid;
+            grid-template-columns: 1fr 0.75fr;
+            align-items: center;
+            gap: clamp(20px, 5vw, 60px);
+            margin: 0 auto 110px;
+        }
+
+        .memory:nth-child(even) {
+            grid-template-columns: 0.75fr 1fr;
+        }
+
+        .memory:nth-child(even) .photo {
+            order: 2;
+        }
+
+        .photo {
+            overflow: hidden;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.25);
+        }
+
+        .photo img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .photo:hover img {
+            transform: scale(1.045);
+        }
+
+        .memory-text .number {
+            display: block;
+            color: var(--pink);
+            font-size: 11px;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+        }
+
+        .memory-text h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 1;
+            margin-bottom: 18px;
+        }
+
+        .memory-text p {
+            font-size: 13px;
+            line-height: 2;
+            color: rgba(255, 244, 237, 0.8);
+        }
+
+        /* FULL-WIDTH LOVE NOTE */
+        .love-note {
+            min-height: 65svh;
+            padding: 100px 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: rgba(22, 10, 20, 0.28);
+        }
+
+        .love-note-inner {
+            max-width: 700px;
+        }
+
+        .quote {
+            font-size: clamp(2.4rem, 6vw, 5rem);
+            line-height: 1.15;
+        }
+
+        .quote span {
+            color: var(--pink);
+            font-style: italic;
+        }
+
+        .quote-credit {
+            margin-top: 30px;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--pink);
+        }
+
+        /* FINAL BIRTHDAY MESSAGE */
+        .finale {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 35px 25px;
+        }
+
+        .finale h2 {
+            font-size: clamp(3.5rem, 11vw, 8rem);
+            line-height: 0.95;
+            margin: 25px 0;
+        }
+
+        .finale h2 span {
+            color: var(--pink);
+            font-style: italic;
+        }
+
+        .finale p {
+            max-width: 440px;
+            font-size: 14px;
+            line-height: 2;
+            color: rgba(255, 244, 237, 0.85);
+        }
+
+        .heart {
+            color: var(--pink);
+            font-size: 30px;
+            margin-top: 30px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: rgba(255, 244, 237, 0.6);
+            background: rgba(15, 7, 15, 0.4);
+        }
+
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.18); }
+        }
+
+        /* Mobile layout */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: clamp(3.4rem, 15vw, 5.5rem);
+            }
+
+            .eyebrow {
+                letter-spacing: 3px;
+            }
+
+            .gallery {
+                padding-inline: 22px;
+            }
+
+            .memory,
+            .memory:nth-child(even) {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                margin-bottom: 85px;
+            }
+
+            .memory:nth-child(even) .photo {
+                order: 0;
+            }
+
+            .photo img {
+                aspect-ratio: 4 / 5;
+            }
+
+            .memory-text h2 {
+                font-size: 2.8rem;
+            }
+
+            .gallery-intro {
+                padding-top: 90px;
+            }
+        }
+
+        /* Respect reduced-motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BACKGROUND VIDEO -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline
+               poster="stuff/burger.jpg">
+            <source
+                src="stuff/bg_vid.mp4"
+                type="video/mp4">
+        </video>
+    </div>
+
+    <div class="video-overlay"></div>
+
+    <!-- OPENING -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">A lil something for my oola</p>
+
+            <h1>
+                Happy Birthday,<br>
+                <span>CATHHUU</span>
+            </h1>
+
+            <p class="hero-description">
+                If i could give you one thing in this world, It would be the ability to
+                see yourself through my eyes. Only then would you see how annoying yet
+                beautiful and important you are to me and everyone else around you.
+            </p>
+        </div>
+
+        <div class="scroll-hint">
+            Scroll down to see stuff
+            <span>↓</span>
+        </div>
+    </section>
+
+    <!-- GALLERY INTRO -->
+    <section class="gallery-intro reveal">
+        <p class="eyebrow">Here's some nalla photos👉👈</p>
+        <h2>Hopefully...<br><i>You love em</i></h2>
+    </section>
+
+    <!-- VERTICAL PHOTO GALLERY -->
+    <section class="gallery">
+
+        <article class="memory reveal">
+            <div class="photo">
+                <img
+                    src="stuff/anfav.jpg"
+                    alt="A couple sharing a moment"
+                    loading="lazy">
+            </div>
+            <div class="memory-text">
+                <span class="number">01 — such a good photo</span>
+                <p>
+                    Yk Out of all the people i couldve met and 
+                    trapped, i am soooo glad youre the one,
+                    istg nothing else has been more rewarding to me.
+                    You matter so much.
+                </p>
+            </div>
+        </article>
+
+        <article class="memory reveal">
+            <div class="photo">
+                <img
+                    src="stuff/angel.jpg"
+                    alt="A happy family moment"
+                    loading="lazy">
+            </div>
+            <div class="memory-text">
+                <span class="number">02 — YOUR SMILE AAAHH</span>
+                <p>
+                    You prolly dont even get to see how gorgeous that smile
+                    of yours is, like the rest of us can but dude omg let me tell you,
+                    no matter how angry a person is at you, that smile just melts all
+                    that frustration away. I have never seen anything more pure.
+                </p>
+            </div>
+        </article>
+
+        <article class="memory reveal">
+            <div class="photo">
+                <img
+                    src="stuff/burger.jpg"
+                    alt="Soft pink flowers"
+                    loading="lazy">
+            </div>
+            <div class="memory-text">
+                <span class="number">03 — The little things</span>
+                <p>
+                    hehe goofy photo lol. I hope you know that
+                    even the littlest things you do, the way you laugh, the way you curse ppl,
+                    your lil quirks, the way you gossip about everyythinngg, the way you talk about your day
+                    in soooo much detail, the way you look while eating your fav food, PAKKAAAAAA all so perfect.
+            </div>
+        </article>
+
+        <article class="memory reveal">
+            <div class="photo">
+                <img
+                    src="stuff/us.jpg"
+                    alt="Golden sunset over a landscape"
+                    loading="lazy">
+            </div>
+            <div class="memory-text">
+                <span class="number">04 — US</span>
+                <p>
+                    Your life has just begun, and i will genuinely always be a part of it.
+                    everything you had done to this point, has just been you building up to
+                    the beginning of everything, and i am so damn proud of you. I am so proud
+                    to be a part of your lil imperfectly perfect life. I spend everyday trying my best
+                    to live up to the love you give me and everyone else you know, but i genuinely cannot get to that point
+                    because you are just that much better.
+                </p>
+            </div>
+        </article>
+
+    </section>
+
+    <!-- reminder -->
+    <section class="love-note">
+        <div class="love-note-inner reveal">
+            <p class="eyebrow">Something You should know</p>
+
+            <p class="quote">
+                In a world full of temporary things,
+                <span>You're permanent to me.</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- FINAL BIRTHDAY WISH -->
+    <section class="finale">
+        <p class="eyebrow reveal">One last thing...</p>
+
+        <h2 class="reveal">
+            You deserve<br>
+            <span>the world.</span>
+        </h2>
+
+        <p class="reveal">
+            Happy birthday, My babyy. I know this year has been rough to you and us but i believe
+            things will get better, you make everything better, so stop whining about oh our life is gonna go bad blah blah blah.
+            Its not cause youre there, and me there with you. 
+            <br>I love you so much, genuinely with everything i have,<br><br> I love you.
+        </p>
+
+        <div class="heart">♥</div>
+    </section>
+
+    <footer>
+        I am sorry if this was too less, i hope you're happy with this.
+    </footer>
+
+    <script>
+        // Reveal elements as they enter the viewport.
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.15
+            }
+        );
+
+        document.querySelectorAll(".reveal").forEach((element) => {
+            observer.observe(element);
+        });
+
+        // If autoplay is blocked, retry muted playback.
+        const video = document.querySelector(".video-background video");
+
+        video.play().catch(() => {
+            // Some browsers require playback to be initiated by the user.
+            console.log("Video autoplay was blocked by the browser.");
+        });
+    </script>
+
+</body>
+</html>
